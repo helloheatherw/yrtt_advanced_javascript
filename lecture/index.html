@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Advanced JavaScript</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Open Sans'; }
+      h1, h2, h3 {
+        font-family: 'Open Sans';
+        font-weight: normal;
+      }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .tr-theme-defaults {
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#eeeeee+0,cccccc+100;Gren+3D */
+        background: #eeeeee; /* Old browsers */
+        background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+        color: #451a6d;
+      }
+
+      .title-area {
+        padding-bottom: 10px;
+      }
+
+      .tr-logo {
+        float: right;
+        margin-top: -30px;
+      }
+
+      .center img {
+        width: 80%;
+      }
+
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, tr-theme-defaults
+
+# Advanced JavaScript
+
+---
+
+class: tr-theme-defaults
+layout: true
+
+.title-area[
+  .tr-logo[![Tech Returners Logo](./images/tr_logo_purple.png)]
+
+  ### {{slide-title}}
+]
+
+---
+
+slide-title: Aims
+
+- To know the difference between imperative and declarative programming styles
+- To be able to use array methods and callbacks
+- To understand different ways of writing a function
+- To be familiar with some popular concepts from JavaScript ES6
+
+---
+
+slide-title: The Imperative Approach
+
+
+```javascript
+const people = ["Heather", "Barry", "John", "Maria"];
+
+for (let i = 0; i < people.length; i++) {
+  console.log(people[i]);
+}
+```
+
+- Creating a loop like this to access each element in an array is **imperative**.
+
+---
+
+slide-title: A more declarative approach
+
+- "Hey, I want to get each item from this array - I don't care how it happens"
+
+
+```javascript
+const people = ["Heather", "Barry", "John", "Maria"];
+
+function logPerson(person) {
+  console.log("The person is " + person);
+}
+
+people.forEach(logPerson);
+
+```
+
+---
+
+slide-title: Function as a value
+
+```javascript
+const people = ["Heather", "Barry", "John", "Maria"];
+
+const logPerson = function(person) {
+  console.log("The person is " + person);
+}
+
+people.forEach(logPerson);
+
+```
+
+---
+
+slide-title: Anonymous Function
+
+- The function we pass to `forEach` can be anonymous
+
+
+```javascript
+const people = ["Heather", "Barry", "John", "Maria"];
+
+people.forEach(function (person) {
+  console.log("The person is " + person);
+});
+
+```
+
+---
+
+slide-title: Arrow Function (ES6)
+
+```javascript
+const people = ["Heather", "Barry", "John", "Maria"];
+
+people.forEach(person => console.log(`The person is ${person}`));
+
+```
+
+---
+slide-title: map
+
+- `map` is used when we want to **transform** each item in an array.
+
+```javascript
+const nums = [3, 5, 10, 1, 2];
+
+function doubleNum (num) {
+  return num * 2;
+}
+
+const doubled = nums.map(doubleNum);
+```
+
+---
+slide-title: map
+
+```javascript
+const nums = [3, 5, 10, 1, 2];
+
+const doubleArray = nums => nums.map(num => num * 2);
+
+doubleArray(nums);
+```
+
+---
+
+slide-title: filter
+
+- `filter` is used when we want to **keep or reject** elements in an array, based on a condition.
+
+```javascript
+const nums = [3, 51, 10, 1, 2, 13];
+
+function removeSmall (num) {
+  if (num > 10) {
+    return true;
+  } else {
+    return false;
+  } 
+}
+
+const largeNumsOnly = nums.filter(removeSmall);
+```
+
+---
+
+slide-title: filter
+
+```javascript
+const nums = [3, 51, 10, 1, 2, 13];
+
+const removeSmallNums = nums => nums.filter(num => num > 10);
+
+removeSmallNums(nums);
+```
+
+---
+
+slide-title: Ternaries
+
+```javascript
+const name = "Heather";
+
+function sayHello(name) {
+  if(name === undefined) {
+    return "Hello you!";
+  } else {
+    return "Hello " + name;
+  }
+}
+sayHello(name);
+
+```
+
+---
+
+slide-title: Ternaries
+
+```javascript
+const name = "Heather";
+
+const sayHello = person => `Hello ${person === undefined ? 'you!' : person}`
+
+sayHello(name);
+
+```
+
+---
+
+slide-title: Default Parameters
+
+```javascript
+const name = "Heather";
+
+const sayHello = (person = 'you') => `Hello ${person}`
+
+sayHello();
+```
+
+---
+
+slide-title: Destructuring
+
+```javascript
+const order = ['First', 'Second', 'Third'];
+const first = order[0];
+const second = order[1];
+const third = order[2];
+
+console.log(first, second, third);
+
+```
+
+---
+
+slide-title: Destructuring
+
+```javascript
+const [first, second, third] = ['First', 'Second', 'Third'];
+
+console.log(first, second, third);
+```
+
+Or even...!
+```javascript
+const [start,,] = ['First', 'Second', 'Third'];
+
+console.log(start);
+
+```
+
+---
+
+slide-title: Destructuring
+
+```javascript
+const person = {
+  name: 'Heather',
+  city: 'Manchester',
+  pet: 'Eddie'
+}
+
+function introduction(person) {
+  const name = person.name;
+  const city = person.city;
+  const pet = person.pet;
+  return 'Hello my name is ' + name + ', ' + 'and I live in ' + city + ' with ' + pet;
+} 
+
+introduction(person);
+
+```
+
+---
+
+slide-title: Destructuring
+
+```javascript
+const person = {
+  name: 'Heather',
+  city: 'Manchester',
+  pet: 'Eddie'
+}
+
+const introduction = ({name, city, pet}) => `Hello my name is ${name}, and I live in ${city} with ${pet}`;
+
+introduction(person);
+
+```
+---
+
+slide-title: Resources
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript
+- https://caniuse.com
+
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightStyle: 'monokai'
+      });
+    </script>
+  </body>
+</html>
